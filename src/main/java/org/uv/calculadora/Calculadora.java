@@ -20,7 +20,7 @@ public class Calculadora extends JFrame{
     private TreeNode resultTree;
     private String textFieldString;
     private boolean calcSuccess = true;
-    private char ops[][] = {
+    private char [][] ops = {
             {'>', '>', '<', '<', '<', '>', '>'},
             {'>', '>', '<', '<', '<', '>', '>'},
             {'>', '>', '>', '>', '<', '>', '>'},
@@ -41,6 +41,7 @@ public class Calculadora extends JFrame{
         tf.selectAll();
         tf.getText();
         tf.addKeyListener(new KeyAdapter(){
+            @Override
             public void keyPressed(KeyEvent e){
                 if(e.getKeyCode() == KeyEvent.VK_ENTER){
                     textFieldString = ((TextField)e.getComponent()).getText();
@@ -64,6 +65,7 @@ public class Calculadora extends JFrame{
     }
     private int levelHeight = 60;
     private int diameter  = 25;
+    @Override
     public void paint(Graphics g){
         super.paint(g);
         if(calcSuccess){
@@ -84,7 +86,6 @@ public class Calculadora extends JFrame{
     }
     private void drawTree(Graphics g, TreeNode node, Point pme, int width, Point pfather){
         if(node == null) return;
-//      System.out.println("in drawTree, node.value=" + node.value + ",node.op=" + node.op);
         g.setColor(Color.GREEN);
         this.drawCircle(g, pme, diameter / 2);
         g.drawLine(pme.x, pme.y, pfather.x, pfather.y);
@@ -172,10 +173,10 @@ public class Calculadora extends JFrame{
     }
 }
 class TreeNode{
-    public double value;
-    public char op = 'E';
-    public TreeNode lft;
-    public TreeNode rt;
+    double value;
+    char op = 'E';
+    TreeNode lft;
+    TreeNode rt;
     public TreeNode(double value){
         this.value = value;
     }
@@ -186,6 +187,7 @@ class TreeNode{
         this.rt = rt;
     }
     StringBuilder buf = new StringBuilder();
+    @Override
     public String toString(){
         out(this);
         return buf.toString();
